@@ -3,23 +3,34 @@ import copy
 
 def init(n, max_nmr, min_nmr):
     """
-    Een functie om de twee arrays aan te maken die nodig zijn om de bucket sort uit te voeren.
+    Maakt een lijst met random getallen aan. En een lijst in roster-stijl voor de bucket sort.
+
+    @param       n: lengte van de lijst met random getallen
+    @param max_nmr: grootste waarde dat een random getal kan aannemen
+    @param min_nmr: kleinste waarde dat een random getal kan aannemen
+    @return       : de twee aangemaakte lijsten
     """
     one_dimensional = [random.randint(min_nmr, max_nmr) for i in range(n)]
     # two_dimensional = [ [x, [None for x in range(n-1)]] for x in range(10) ]
-    two_dimensional = [ [x, []] for x in range(10) ] # maak een roster aan met 9 rijen. elke rij heeft een lijst waarin de getallen komen te staan
+    two_dimensional = [ [x, []] for x in range(10) ] # maak een roster aan met 9 rijen. elke rij heeft een lijst waarin de gesorteerde getallen komen te staan
 
     return one_dimensional, two_dimensional
 
 
 def sorter(to_sort, bucket, tiental, slice_at):
     """ 
-    Deze functie voert de sortering uit, en geeft een lijst terug met de bewerkingen na één gathering pass
+    Deze functie voert de sortering in de bucket uit. 
+
+    @param  to_sort: de ongesorteerde lijst die gesorteert moet worden
+    @param   bucket: het roster waarin de getallen worden verdeeld
+    @param  tiental: geeft aan of het algoritme bij een tiental, honderdtal etc. is
+    @param slice_at: dit geeft aan op welk cijfer in een getal de focus ligt.
+    @return        : een bewerkte lijst na één ronde sortering van de originele lijst
     """
     new_list = []
 
     for i in to_sort:
-        if i < tiental:
+        if i < tiental:     
             bucket[0][1].append(i)
         elif slice_at == 1:
             unit = int(str(i)[-1:])
@@ -36,7 +47,9 @@ def sorter(to_sort, bucket, tiental, slice_at):
 
 def bucket_sort():
     """
-    
+    De main functie die de bucket-sort uitvoert tot dat er een van klein naar groot gesorteerde lijst is.
+
+    @return: een van klein naar groot gesorteerde lijst.
     """
 
     lenght_list = int(input("Geef de lengte van de lijst aan:"))
@@ -53,7 +66,7 @@ def bucket_sort():
     max_tiental = len(str(max(to_sort)))    # om ervoor te zorgen dat er tot en met het grootste getal wordt gesorteerd
 
     for i in range(0, max_tiental):
-        bucket = copy.deepcopy(clean_bucket)                    # maak de bucket schoon
+        bucket = copy.deepcopy(clean_bucket)    # maak de bucket schoon
         to_sort = sorter(to_sort, bucket, tiental, slice_at)   
         
 
